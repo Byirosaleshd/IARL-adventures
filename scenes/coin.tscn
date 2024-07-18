@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://mvyg4sv278wj"]
+
+[ext_resource type="Script" path="res://scripts/Coin2D.gd" id="1_t0532"]
+[ext_resource type="Texture2D" uid="uid://46tu41656ehh" path="res://sprites/coin.png" id="1_uxof5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5wf77"]
+radius = 7.0
+
+[sub_resource type="Animation" id="Animation_7bjan"]
+resource_name = "Coin"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 11]
+}
+
+[sub_resource type="Animation" id="Animation_uv4s5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dy4by"]
+_data = {
+"Coin": SubResource("Animation_7bjan"),
+"RESET": SubResource("Animation_uv4s5")
+}
+
+[node name="Coin" type="Node2D"]
+
+[node name="Coin2D" type="Area2D" parent="."]
+script = ExtResource("1_t0532")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Coin2D"]
+shape = SubResource("CircleShape2D_5wf77")
+
+[node name="Sprite2D" type="Sprite2D" parent="Coin2D"]
+texture = ExtResource("1_uxof5")
+hframes = 12
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Coin2D"]
+libraries = {
+"": SubResource("AnimationLibrary_dy4by")
+}
+autoplay = "Coin"
+
+[connection signal="body_entered" from="Coin2D" to="Coin2D" method="_on_body_entered"]
+[connection signal="body_shape_entered" from="Coin2D" to="Coin2D" method="_on_body_shape_entered"]

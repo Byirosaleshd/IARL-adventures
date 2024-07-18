@@ -286,7 +286,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Character" type="CharacterBody2D"]
+[node name="Character" type="CharacterBody2D" groups=["player"]]
 position = Vector2(0, 1)
 script = ExtResource("1_jemsq")
 
